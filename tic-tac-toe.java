@@ -14,18 +14,19 @@ public class tictactoe {
 	private static int count = 1;
 	private static boolean gameDone = false;
 	
+	// Displays the game to users
 	public static void print() {
 		String[][] xy = new String[3][3];
 		String line = "";
 		xy[1][2] = "x";
 		line += "+-+-+-+\n";
+		
 		for(int i = 0; i < xy.length; i++) {
 			if (i != 0) {
 				line += "|\n+-+-+-+ \n";
-				}
+			}
 			
 			for(int j = 0; j < xy[i].length; j ++) {
-				
 				if (xy[j][i] == "o") {
 					line += "|o";
 					
@@ -36,14 +37,17 @@ public class tictactoe {
 				}
 			}
 		}
+		
 		line += "|\n+-+-+-+ \n";
 		System.out.println(line);
 	}
 	
-	public static void game (boolean gameStarted) {
+	// Game logic function
+	public static void game () {
 		int[][] gameBoard = new int[3][3];
 		int player = 1;
 				
+		 // While game is ongoing...
 		while(!gameDone) {
 			print();
 			if (count % 2 == 1) {
@@ -89,6 +93,7 @@ public class tictactoe {
 		return false;
 	}
 	
+	// Checks if a player has won diagonally
 	public static boolean diagonalCheck(int[][] gameBoard, int player) {
 		if (gameBoard[0][0] == player && gameBoard[1][1] == player && gameBoard[2][2] == player) {
 			return true;
@@ -99,6 +104,7 @@ public class tictactoe {
 		return false;
 	}
 	
+	// Checks if a player has won vertically
 	public static boolean verticalCheck(int[][] gameBoard, int player) {
 	    if (gameBoard[0][0] == player && gameBoard[1][0] == player && gameBoard[2][0] == player) {
 	        return true;
@@ -111,6 +117,7 @@ public class tictactoe {
 	    return false;
 	}
 	
+	// Checks if a player has won horizontally
 	public static boolean horizontalCheck(int[][] gameBoard, int player) {
 		if (gameBoard[0][0] == player && gameBoard[0][1] == player && gameBoard[0][2] == player) {
 			return true;
@@ -124,6 +131,6 @@ public class tictactoe {
 	}
 	
 	public static void main(String[]Args) {
-		game(true);
+		game();
 	}
 }
