@@ -9,16 +9,16 @@ import java.util.Scanner;
  * 
  * A tic-tac-toe game.
  */
-public class tictactoe {
+public class TicTacToe {
 	
 	private static int count = 1;
 	private static boolean gameDone = false;
+	private static String[][] xy = new String[3][3];
+	private static int player = 1;
 	
 	// Displays the game to users
 	public static void print() {
-		String[][] xy = new String[3][3];
 		String line = "";
-		xy[1][2] = "x";
 		line += "+-+-+-+\n";
 		
 		for(int i = 0; i < xy.length; i++) {
@@ -27,10 +27,11 @@ public class tictactoe {
 			}
 			
 			for(int j = 0; j < xy[i].length; j ++) {
-				if (xy[j][i] == "o") {
+				if (xy[i][j] == null) {
+				    line += "| ";
+				} else if (xy[i][j].equals("o")) {
 					line += "|o";
-					
-				} else if (xy[j][i] == "x") {
+				} else if (xy[i][j].equals("x")) {
 					line += "|x";
 				} else {
 					line += "| ";
@@ -45,46 +46,60 @@ public class tictactoe {
 	// Game logic function
 	public static void game () {
 		int[][] gameBoard = new int[3][3];
-		int player = 1;
+		Scanner scanner = new Scanner(System.in);
+		print();
 				
 		 // While game is ongoing...
 		while(!gameDone) {
-			print();
 			if (count % 2 == 1) {
 				player = 1;
 			} else {
 				player = 2;
 			}
 			
+			// Getting player inputs:
+			System.out.println("Player " + player + "'s turn!");
+			int x = scanner.nextInt();
+			int y = scanner.nextInt();
+			System.out.println("Player " + player + " has selected spot (" + x + ", " + y + ")");
+			
+			// Updating GameBoard:
+			gameBoard[x][y] = player;
+			if (player == 1) {
+				xy[x][y] = "x";
+			} else {
+				xy[x][y] = "o";
+			}
+			
+			// Printing GameBoard:
+			print();
 			if (count >= 5) {
-				boolean winner = checkWin(gameBoard, player);
+				boolean winner = checkWin(gameBoard);
 				if (winner) {
 					gameDone = true;
+					System.out.println("Player " + player + " is the winner!");
+					return;
 				}
 			}
 			
-			System.out.println("Player " + player + "'s turn!");
-			Scanner playerXPositionInput = new Scanner(System.in);
-			int x = playerXPositionInput.nextInt();
-			Scanner playerYPositionInput = new Scanner(System.in);
-			int y = playerXPositionInput.nextInt();
-			System.out.println("Player " + player + " has selected spot (" + x + ", " + y + ")");
-			gameBoard[x][y] = player;
+			if (count >= 9 && !gameDone) {
+				gameDone = true;
+				System.out.println("GAME OVER!");
+				return;
+			}
 			count += 1;
-			
-			
 		}
 	}
 	
-	public static boolean checkWin (int[][] gameBoard, int player) {
+	public static boolean checkWin (int[][] gameBoard) {
 		// Diagonal Check
-		boolean diagonal = diagonalCheck(gameBoard, player);
+		boolean diagonal = diagonalCheck(gameBoard);
 		
-		// Horizontal Check
-		boolean vertical = verticalCheck(gameBoard, player);
-
 		// Vertical Check
-		boolean horizontal = horizontalCheck(gameBoard, player);
+		boolean vertical = verticalCheck(gameBoard);
+
+		// Horizontal Check
+		boolean horizontal = horizontalCheck(gameBoard);
 		
 		if (diagonal || vertical || horizontal) {
 			return true;
@@ -94,7 +109,7 @@ public class tictactoe {
 	}
 	
 	// Checks if a player has won diagonally
-	public static boolean diagonalCheck(int[][] gameBoard, int player) {
+	public static boolean diagonalCheck(int[][] gameBoard) {
 		if (gameBoard[0][0] == player && gameBoard[1][1] == player && gameBoard[2][2] == player) {
 			return true;
 		} else if (gameBoard[0][2] == player && gameBoard[1][1] == player && gameBoard[2][0] == player) {
@@ -105,7 +120,7 @@ public class tictactoe {
 	}
 	
 	// Checks if a player has won vertically
-	public static boolean verticalCheck(int[][] gameBoard, int player) {
+	public static boolean verticalCheck(int[][] gameBoard) {
 	    if (gameBoard[0][0] == player && gameBoard[1][0] == player && gameBoard[2][0] == player) {
 	        return true;
 	    } else if (gameBoard[0][1] == player && gameBoard[1][1] == player && gameBoard[2][1] == player) {
@@ -118,7 +133,7 @@ public class tictactoe {
 	}
 	
 	// Checks if a player has won horizontally
-	public static boolean horizontalCheck(int[][] gameBoard, int player) {
+	public static boolean horizontalCheck(int[][] gameBoard) {
 		if (gameBoard[0][0] == player && gameBoard[0][1] == player && gameBoard[0][2] == player) {
 			return true;
 		} else if (gameBoard[1][0] == player && gameBoard[1][1] == player && gameBoard[1][2] == player) {
