@@ -3,9 +3,9 @@ import java.util.Scanner;
 /**
  * @author:
  * Tyler Mestery
- * Harsh
- * Dan
- * Austin
+ * Harsh Jaladi
+ * Dan Habiger
+ * Austin Das
  * 
  * A tic-tac-toe game.
  */
