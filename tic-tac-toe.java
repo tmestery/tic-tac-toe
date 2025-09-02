@@ -2,10 +2,17 @@ import java.util.Scanner;
 
 /**
  * @author:
- * Tyler Mestery
- * Harsh Jaladi
+ * Tyler Mestery:
+ * - Worked on the game and checkwin function and all contributed to row checks
+ * 
+ * Harshith Jaladi
+ * - Worked on the print function and all contributed to row checks
+ * 
  * Dan Habiger
+ * - Worked on the game and checkwin function and all contributed to row checks
+ * 
  * Austin Das
+ * - Worked on the print function and all contributed to row checks
  * 
  * A tic-tac-toe game.
  */
